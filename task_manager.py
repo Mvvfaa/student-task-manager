@@ -24,3 +24,15 @@ class TaskManager:
 
     def delete_task(self, task_id):
         raise NotImplementedError
+
+    def get_tasks(self):
+        return list(self.tasks)
+
+    def display_tasks(self):
+        if not self.tasks:
+            print("No tasks yet.")
+            return
+        print("\n--- Your Tasks ---")
+        for t in self.tasks:
+            status = "[x]" if t.completed else "[ ]"
+            print(f"{t.id}. {status} {t.title}")
