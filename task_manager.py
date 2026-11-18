@@ -13,7 +13,16 @@ class TaskManager:
         self.tasks = []
         self._next_id = 1
 
+    MAX_TITLE_LENGTH = 100
+
     def add_task(self, title):
+        if title is None or not title.strip():
+            raise ValueError("Task title cannot be empty.")
+        title = title.strip()
+        if len(title) > self.MAX_TITLE_LENGTH:
+            raise ValueError(
+                f"Task title cannot exceed {self.MAX_TITLE_LENGTH} characters."
+            )
         task = Task(self._next_id, title)
         self.tasks.append(task)
         self._next_id += 1
