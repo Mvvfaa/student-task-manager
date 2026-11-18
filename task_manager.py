@@ -13,6 +13,14 @@ class TaskManager:
         self.tasks = []
         self._next_id = 1
 
+    def delete_task(self, task_id):
+        if not isinstance(task_id, int) or task_id <= 0:
+            raise ValueError("Task ID must be a positive whole number.")
+        for t in self.tasks:
+            if t.id == task_id:
+                self.tasks.remove(t)
+                return t
+        raise ValueError(f"No task found with ID {task_id}.")
     MAX_TITLE_LENGTH = 100
 
     def add_task(self, title):
@@ -38,7 +46,11 @@ class TaskManager:
         raise ValueError(f"No task found with ID {task_id}.")
 
     def delete_task(self, task_id):
-        raise NotImplementedError
+        for t in self.tasks:
+            if t.id == task_id:
+                self.tasks.remove(t)
+                return t
+        raise ValueError(f"No task found with ID {task_id}.")
 
     def get_tasks(self):
         return list(self.tasks)
