@@ -21,9 +21,29 @@ class TaskManager:
                 self.tasks.remove(t)
                 return t
         raise ValueError(f"No task found with ID {task_id}.")
+    MAX_TITLE_LENGTH = 100
+
+    def add_task(self, title):
+        if title is None or not title.strip():
+            raise ValueError("Task title cannot be empty.")
+        title = title.strip()
+        if len(title) > self.MAX_TITLE_LENGTH:
+            raise ValueError(
+                f"Task title cannot exceed {self.MAX_TITLE_LENGTH} characters."
+            )
+        task = Task(self._next_id, title)
+        self.tasks.append(task)
+        self._next_id += 1
+        return task
 
     def complete_task(self, task_id):
-        raise NotImplementedError
+        for t in self.tasks:
+            if t.id == task_id:
+                if t.completed:
+                    raise ValueError(f"Task {task_id} is already completed.")
+                t.completed = True
+                return t
+        raise ValueError(f"No task found with ID {task_id}.")
 
     def delete_task(self, task_id):
         for t in self.tasks:
