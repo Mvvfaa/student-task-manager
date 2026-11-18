@@ -23,7 +23,11 @@ class TaskManager:
         raise NotImplementedError
 
     def delete_task(self, task_id):
-        raise NotImplementedError
+        for t in self.tasks:
+            if t.id == task_id:
+                self.tasks.remove(t)
+                return t
+        raise ValueError(f"No task found with ID {task_id}.")
 
     def get_tasks(self):
         return list(self.tasks)
